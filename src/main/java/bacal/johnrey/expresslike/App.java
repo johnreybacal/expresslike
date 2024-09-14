@@ -1,4 +1,4 @@
-package bacal.johnrey;
+package bacal.johnrey.expresslike;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -50,7 +50,7 @@ public class App extends Router {
 
     /**
      * Register a router to the app
-     * 
+     *
      * @param router
      */
     public void use(Router router) {
