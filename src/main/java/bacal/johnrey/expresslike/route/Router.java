@@ -30,7 +30,7 @@ public class Router {
 
     /**
      * Map middlewares to a GET request on url
-     * 
+     *
      * @param url
      * @param middlewares
      */
@@ -76,10 +76,6 @@ public class Router {
      */
     public void delete(String url, Middleware... middlewares) {
         on(Method.DELETE, url, middlewares);
-    }
-
-    public String getUrl() {
-        return url;
     }
 
     public List<Route> getRoutes() {
