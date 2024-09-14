@@ -1,6 +1,7 @@
 package bacal.johnrey.expresslike.route;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class Registry {
      * @param route
      */
     public void register(Route... route) {
-        this.routes.addAll(routes);
+        this.routes.addAll(Arrays.asList(route));
     }
 
     public List<Route> getRoutes() {

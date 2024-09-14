@@ -2,6 +2,7 @@ package bacal.johnrey.expresslike;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.List;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -61,6 +62,11 @@ public class App extends Router {
     protected void on(Method method, String url, Middleware... middlewares) {
         Route route = new Route(url, method, middlewares);
         this.registry.register(route);
+    }
+
+    @Override
+    public List<Route> getRoutes() {
+        return registry.getRoutes();
     }
 
 }
