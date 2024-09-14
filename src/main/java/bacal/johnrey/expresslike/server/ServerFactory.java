@@ -5,9 +5,15 @@ import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
 
+import bacal.johnrey.expresslike.route.Handler;
+
 public class ServerFactory {
     public static HttpServer create(int port, int backlog) throws IOException {
-        return HttpServer.create(new InetSocketAddress(port), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        Handler handler = new Handler();
+        server.createContext("/", handler);
+
+        return server;
     }
 
     public static HttpServer create(int port) throws IOException {
