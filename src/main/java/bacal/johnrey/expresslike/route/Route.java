@@ -1,6 +1,6 @@
 package bacal.johnrey.expresslike.route;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import bacal.johnrey.expresslike.http.Method;
@@ -17,17 +17,10 @@ public class Route {
             Middleware... middlewares) {
         this.url = url;
         this.method = method;
-        this.parameters = new HashMap<>();
-        this.middlewares = middlewares;
-    }
 
-    public Route(String url,
-            Method method,
-            Map<Integer, String> parameters,
-            Middleware... middlewares) {
-        this.url = url;
-        this.method = method;
-        this.parameters = parameters;
+        List<String> urlSegments = Helper.getSegments(url);
+        this.parameters = Helper.getParameters(urlSegments);
+
         this.middlewares = middlewares;
     }
 
