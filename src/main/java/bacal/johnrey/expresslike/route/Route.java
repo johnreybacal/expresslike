@@ -6,6 +6,9 @@ import java.util.Map;
 import bacal.johnrey.expresslike.http.Method;
 import bacal.johnrey.expresslike.http.Middleware;
 
+/**
+ * Mapping of middlewares to a request
+ */
 public class Route {
     private final String url;
     private final Method method;

@@ -9,6 +9,9 @@ import java.util.stream.Stream;
 
 import bacal.johnrey.expresslike.http.Request;
 
+/**
+ * Helper methods for the route package
+ */
 public class Helper {
     /**
      * Get the segments of the path, omitting empty segments

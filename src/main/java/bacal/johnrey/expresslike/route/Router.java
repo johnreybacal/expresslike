@@ -28,22 +28,52 @@ public class Router {
         this.routes.add(route);
     }
 
+    /**
+     * Map middlewares to a GET request on url
+     * 
+     * @param url
+     * @param middlewares
+     */
     public void get(String url, Middleware... middlewares) {
         on(Method.GET, url, middlewares);
     }
 
+    /**
+     * Map middlewares to a POST request on url
+     *
+     * @param url
+     * @param middlewares
+     */
     public void post(String url, Middleware... middlewares) {
         on(Method.POST, url, middlewares);
     }
 
+    /**
+     * Map middlewares to a PUT request on url
+     *
+     * @param url
+     * @param middlewares
+     */
     public void put(String url, Middleware... middlewares) {
         on(Method.PUT, url, middlewares);
     }
 
+    /**
+     * Map middlewares to a PATCH request on url
+     *
+     * @param url
+     * @param middlewares
+     */
     public void patch(String url, Middleware... middlewares) {
         on(Method.PATCH, url, middlewares);
     }
 
+    /**
+     * Map middlewares to a DELETE request on url
+     *
+     * @param url
+     * @param middlewares
+     */
     public void delete(String url, Middleware... middlewares) {
         on(Method.DELETE, url, middlewares);
     }

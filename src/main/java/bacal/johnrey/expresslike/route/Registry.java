@@ -3,6 +3,9 @@ package bacal.johnrey.expresslike.route;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Registry of routes
+ */
 public class Registry {
 
     private final List<Route> routes;

@@ -2,6 +2,9 @@ package bacal.johnrey.expresslike.http;
 
 import bacal.johnrey.expresslike.exception.ServerException;
 
+/**
+ * Functional interface for middlewares
+ */
 public interface Middleware {
     /**
      * Callback for resolving middlewares

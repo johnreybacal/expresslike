@@ -11,6 +11,9 @@ import bacal.johnrey.expresslike.http.Middleware;
 import bacal.johnrey.expresslike.http.Request;
 import bacal.johnrey.expresslike.http.Response;
 
+/**
+ * Handler for registered route in the Registry
+ */
 public class Handler implements HttpHandler {
     private Registry registry;
 
