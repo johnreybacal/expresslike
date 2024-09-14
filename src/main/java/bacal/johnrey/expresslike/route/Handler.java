@@ -12,10 +12,16 @@ import bacal.johnrey.expresslike.http.Request;
 import bacal.johnrey.expresslike.http.Response;
 
 public class Handler implements HttpHandler {
+    private Registry registry;
+
+    public Handler(Registry registry) {
+        this.registry = registry;
+    }
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            List<Route> routes = Registry.getInstance().getRoutes();
+            List<Route> routes = registry.getRoutes();
 
             for (Route route : routes) {
                 if (Helper.isRouteMatch(route, exchange.getRequestMethod(), exchange.getRequestURI().getPath())) {
