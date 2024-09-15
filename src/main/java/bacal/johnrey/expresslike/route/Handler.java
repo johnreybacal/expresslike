@@ -43,7 +43,7 @@ public class Handler implements HttpHandler {
                     for (int i = middlewaresLength - 1; i > 0; i--) {
                         final int index = i;
                         // Create a next call
-                        next = (t) -> {
+                        next = (error) -> {
                             // if the next is invoked in the prior middleware
                             Middleware middleware = middlewares[index];
                             // set the index to null so that it won't be invoked in the next invocation
@@ -51,7 +51,7 @@ public class Handler implements HttpHandler {
                             middlewares[index] = null;
 
                             // Resolve this middleware
-                            middleware.resolve(t, request, response, nexts[index]);
+                            middleware.resolve(error, request, response, nexts[index]);
                         };
                         // Assign the next to be used by the middleware that comes first
                         nexts[i - 1] = next;
