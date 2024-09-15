@@ -6,48 +6,65 @@ import com.sun.net.httpserver.HttpExchange;
 
 import bacal.johnrey.expresslike.App;
 import bacal.johnrey.expresslike.exception.ServerException;
+import bacal.johnrey.expresslike.http.Middleware;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         App app = new App();
 
-        app.get("/hello", (err, req, res, next) -> {
-            System.out.println("Middleware 1");
+        Middleware authMiddleware = (err, req, res, next) -> {
+            System.out.println("User is authorized!");
             next.resolve(null);
-        }, (err, req, res, next) -> {
-            System.out.println("Middleware 1.2");
-            next.resolve(null);
-        }, (err, req, res, next) -> {
-            System.out.println("Middleware 2");
-            res.send(200, "OK");
-        }, (err, req, res, next) -> {
-            HttpExchange exchange = res.getExchange();
-            System.out.println(exchange.getRequestMethod() + " "
-                    + exchange.getRequestURI().getPath() + " "
-                    + exchange.getResponseCode() + " - "
-                    + exchange.getResponseHeaders().getFirst("Content-length"));
-        });
-        app.get("/exception", (err, req, res, next) -> {
-            System.out.println("Middleware 1");
-            next.resolve(null);
-        }, (err, req, res, next) -> {
-            System.out.println("Middleware 1.2");
-            next.resolve(new ServerException(500, "Oh noes"));
-        }, (err, req, res, next) -> {
+        };
+
+        Middleware errorMiddleware = (err, req, res, next) -> {
             if (err != null) {
                 System.out.println(err);
-                res.send(500, "NG");
-            } else {
-                System.out.println("Middleware 2");
-                res.send(200, "OK");
+                if (err instanceof ServerException) {
+                    res.send(((ServerException) err).getStatusCode(), "Handled: " + err.getMessage());
+                } else {
+                    res.send(500, "Unhandled: " + err.getMessage());
+                }
             }
-        }, (err, req, res, next) -> {
+        };
+
+        Middleware logMiddleware = (err, req, res, next) -> {
             HttpExchange exchange = res.getExchange();
             System.out.println(exchange.getRequestMethod() + " "
                     + exchange.getRequestURI().getPath() + " "
                     + exchange.getResponseCode() + " - "
                     + exchange.getResponseHeaders().getFirst("Content-length"));
-        });
+        };
+
+        app.get("/hello",
+                authMiddleware,
+                (err, req, res, next) -> {
+                    System.out.println("Middleware 2");
+                    String name = req.getQuery().get("name");
+                    String response = "Hello";
+                    if (name != null) {
+                        response += ", " + name;
+                    }
+                    res.send(200, response);
+                },
+                errorMiddleware,
+                logMiddleware);
+        app.get("/exception",
+                authMiddleware,
+                (err, req, res, next) -> {
+                    next.resolve(new ServerException(400, "Oh noes"));
+                    res.send(200, "OK");
+                },
+                errorMiddleware,
+                logMiddleware);
+        app.get("/exception/unhandled",
+                authMiddleware,
+                (err, req, res, next) -> {
+                    next.resolve(new Exception("Oh noes"));
+                    res.send(200, "OK");
+                },
+                errorMiddleware,
+                logMiddleware);
         System.out.println(app.getRoutes());
 
         app.listen(8080);
