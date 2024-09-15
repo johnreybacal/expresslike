@@ -14,9 +14,11 @@ import com.sun.net.httpserver.HttpExchange;
 public class Response {
 
     private final HttpExchange exchange;
+    private boolean sent;
 
     public Response(HttpExchange exchange) {
         this.exchange = exchange;
+        sent = false;
     }
 
     public Response setContentType(String[] contentType) {
@@ -26,12 +28,16 @@ public class Response {
     }
 
     public void send(int statusCode, Object data) throws IOException {
+        if (sent) {
+            return;
+        }
         String response = data.toString();
 
         exchange.sendResponseHeaders(statusCode, response.length());
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(response.getBytes());
         }
+        sent = true;
     }
 
     public void sendJson(int statusCode, Object data) throws IOException {
