@@ -43,4 +43,9 @@ public class Route {
         return middlewares;
     }
 
+    @Override
+    public String toString() {
+        return method.name() + " " + url;
+    }
+
 }
