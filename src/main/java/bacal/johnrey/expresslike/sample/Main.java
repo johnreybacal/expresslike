@@ -1,6 +1,7 @@
 package bacal.johnrey.expresslike.sample;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -58,6 +59,16 @@ public class Main {
         app.get("/exception/unhandled",
                 (err, req, res, next) -> {
                     next.resolve(new Exception("Oh noes"));
+                    res.send(200, "OK");
+                });
+        app.get("/wait",
+                (err, req, res, next) -> {
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException e) {
+                        next.resolve(e);
+                    }
+
                     res.send(200, "OK");
                 });
         System.out.println(app.getRoutes());
