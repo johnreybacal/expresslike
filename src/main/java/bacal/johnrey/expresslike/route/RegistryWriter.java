@@ -2,7 +2,7 @@ package bacal.johnrey.expresslike.route;
 
 import bacal.johnrey.expresslike.http.Middleware;
 
-public interface RegistryWriter {
+public interface RegistryWriter extends RegistryReader {
     /**
      * Register a route
      *

@@ -9,7 +9,7 @@ import bacal.johnrey.expresslike.http.Middleware;
 /**
  * Registry of routes
  */
-public class Registry implements RegistryWriter, RegistryReader {
+public class Registry implements RegistryWriter {
 
     private final List<Middleware> preRouteMiddlewares;
     private final List<Middleware> postRouteMiddlewares;
