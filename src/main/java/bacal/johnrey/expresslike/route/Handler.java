@@ -9,9 +9,9 @@ import com.sun.net.httpserver.HttpHandler;
  * Handler for registered route in the Registry
  */
 public class Handler implements HttpHandler {
-    private Registry registry;
+    private RegistryReader registry;
 
-    public Handler(Registry registry) {
+    public Handler(RegistryReader registry) {
         this.registry = registry;
     }
 

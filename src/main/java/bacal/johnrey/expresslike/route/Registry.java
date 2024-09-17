@@ -9,7 +9,7 @@ import bacal.johnrey.expresslike.http.Middleware;
 /**
  * Registry of routes
  */
-public class Registry {
+public class Registry implements RegistryWriter, RegistryReader {
 
     private final List<Middleware> preRouteMiddlewares;
     private final List<Middleware> postRouteMiddlewares;
@@ -21,29 +21,14 @@ public class Registry {
         this.routes = new ArrayList<>();
     }
 
-    /**
-     * Register a route
-     *
-     * @param route
-     */
     public void register(Route... route) {
         this.routes.addAll(Arrays.asList(route));
     }
 
-    /**
-     * Register a middleware before route
-     *
-     * @param middleware
-     */
     public void addBeforeRoute(Middleware... middleware) {
         this.preRouteMiddlewares.addAll(Arrays.asList(middleware));
     }
 
-    /**
-     * Register a middleware after route
-     *
-     * @param middleware
-     */
     public void addAfterRoute(Middleware... middleware) {
         this.postRouteMiddlewares.addAll(Arrays.asList(middleware));
     }

@@ -13,9 +13,9 @@ import bacal.johnrey.expresslike.http.Response;
 
 public class HandlerThread implements Runnable {
     private final HttpExchange exchange;
-    private final Registry registry;
+    private final RegistryReader registry;
 
-    public HandlerThread(HttpExchange exchange, Registry registry) {
+    public HandlerThread(HttpExchange exchange, RegistryReader registry) {
         this.exchange = exchange;
         this.registry = registry;
     }
