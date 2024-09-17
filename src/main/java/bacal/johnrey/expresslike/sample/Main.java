@@ -36,8 +36,11 @@ public class Main {
                     + exchange.getResponseHeaders().getFirst("Content-length"));
         };
 
+        app.useBeforeRoute(authMiddleware);
+        app.useAfterRoute(errorMiddleware);
+        app.useAfterRoute(logMiddleware);
+
         app.get("/hello",
-                authMiddleware,
                 (err, req, res, next) -> {
                     System.out.println("Middleware 2");
                     String name = req.getQuery().get("name");
@@ -46,25 +49,17 @@ public class Main {
                         response += ", " + name;
                     }
                     res.send(200, response);
-                },
-                errorMiddleware,
-                logMiddleware);
+                });
         app.get("/exception",
-                authMiddleware,
                 (err, req, res, next) -> {
                     next.resolve(new ServerException(400, "Oh noes"));
                     res.send(200, "OK");
-                },
-                errorMiddleware,
-                logMiddleware);
+                });
         app.get("/exception/unhandled",
-                authMiddleware,
                 (err, req, res, next) -> {
                     next.resolve(new Exception("Oh noes"));
                     res.send(200, "OK");
-                },
-                errorMiddleware,
-                logMiddleware);
+                });
         System.out.println(app.getRoutes());
 
         app.listen(8080);

@@ -58,6 +58,24 @@ public class App extends Router {
         registry.register(router.getRoutes().toArray(new Route[0]));
     }
 
+    /**
+     * Register a middleware to be executed before the route
+     * 
+     * @param middleware
+     */
+    public void useBeforeRoute(Middleware... middleware) {
+        registry.addBeforeRoute(middleware);
+    }
+
+    /**
+     * Register a middleware to be executed after the route
+     * 
+     * @param middleware
+     */
+    public void useAfterRoute(Middleware... middleware) {
+        registry.addAfterRoute(middleware);
+    }
+
     @Override
     protected void on(Method method, String url, Middleware... middlewares) {
         Route route = new Route(url, method, middlewares);

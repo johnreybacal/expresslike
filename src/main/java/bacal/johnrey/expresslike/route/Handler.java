@@ -33,7 +33,7 @@ public class Handler implements HttpHandler {
                     Response response = new Response(exchange);
                     Helper.setRequestParameters(request, route.getParameters());
 
-                    final Middleware[] middlewares = route.getMiddlewares().clone();
+                    final Middleware[] middlewares = registry.wrapRouteMiddlewares(route);
                     int middlewaresLength = middlewares.length;
                     Next next = null;
                     final Next[] nexts = new Next[middlewaresLength];
